@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Googa Login/Signup</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 300px; margin: 0 auto; padding: 20px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; }
+        .profile { margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="formTitle">Signup</h2>
+    <form id="authForm">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <input type="file" id="profilePic" accept="image/*" />
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+</div>
+
+<div id="profile" class="profile" style="display: none;">
+    <h2>Welcome, <span id="usernameDisplay"></span></h2>
+    <img id="profileImage" src="" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%;"/>
+    <p><a href="#" onclick="logout()">Logout</a></p>
+</div>
+
+<script>
+    let isLoggedIn = false;
+    let userData = null;
+
+    function showLogin() {
+        document.getElementById('formTitle').textContent = 'Login';
+        document.getElementById('authForm').onsubmit = loginUser;
+    }
+
+    function logout() {
+        isLoggedIn = false;
+        userData = null;
+        document.getElementById('profile').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+    }
+
+    function loginUser(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Fake login validation for demonstration
+        if (username === "user" && password === "password") {
+            isLoggedIn = true;
+            userData = { username, profilePicture: "https://via.placeholder.com/100" };
+            document.getElementById('usernameDisplay').textContent = username;
+            document.getElementById('profileImage').src = userData.profilePicture;
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('profile').style.display = 'block';
+        } else {
+            alert("Invalid credentials!");
+        }
+    }
+
+    function signupUser(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const profilePic = document.getElementById('profilePic').files[0];
+
+        // Fake signup for demonstration
+        if (username && email && password) {
+            alert("Signup successful! Please login.");
+            showLogin(); // Switch to login form after signup
+        }
+    }
+
+    document.getElementById('authForm').onsubmit = signupUser;
+</script>
+
+</body>
+</html>

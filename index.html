@@ -37,18 +37,28 @@
     let isLoggedIn = false;
     let userData = null;
 
+    // Switch to Login form
     function showLogin() {
         document.getElementById('formTitle').textContent = 'Login';
         document.getElementById('authForm').onsubmit = loginUser;
     }
 
+    // Switch to Signup form
+    function showSignup() {
+        document.getElementById('formTitle').textContent = 'Signup';
+        document.getElementById('authForm').onsubmit = signupUser;
+    }
+
+    // Log out function
     function logout() {
         isLoggedIn = false;
         userData = null;
         document.getElementById('profile').style.display = 'none';
         document.querySelector('.container').style.display = 'block';
+        showLogin(); // Reset to login form
     }
 
+    // Fake login logic
     function loginUser(event) {
         event.preventDefault();
         const username = document.getElementById('username').value;
@@ -67,6 +77,7 @@
         }
     }
 
+    // Fake signup logic
     function signupUser(event) {
         event.preventDefault();
         const username = document.getElementById('username').value;
@@ -76,12 +87,15 @@
 
         // Fake signup for demonstration
         if (username && email && password) {
+            userData = { username, profilePicture: URL.createObjectURL(profilePic) };
             alert("Signup successful! Please login.");
             showLogin(); // Switch to login form after signup
+        } else {
+            alert("Please fill out all fields!");
         }
     }
 
-    document.getElementById('authForm').onsubmit = signupUser;
+    document.getElementById('authForm').onsubmit = signupUser; // Default is signup
 </script>
 
 </body>
